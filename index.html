@@ -262,7 +262,7 @@
         new Genre(
             ["A building mod"],
             ["that adds"],
-            ["lots of", "more types of"],
+            ["lots of", "more types of", "more variety to"],
             ["blocks", "doors", "fences", "furniture", "glass", "ladders", "paintings", "pressure plates", "sand", "slabs", "slopes", "stairs", "stone", "torches", "trapdoors", "trees", "vertical slabs", "walls", "wood", "wool colors"],
             ["(it's compatible with %mod)", "that %author probably won't like", "that are black", "that are blue", "that are circular", "that are customizable", "that are functional", "that are green", "that are inspired by %modingenre", "that are inspired by Japanese architecture", "that are inspired by vanilla", "that are inspried by %mod", "that are red", "that are smaller than a block", "that are vanilla+", "that are white", "that are yellow", "that can be chiseled into many different forms", "that can be waterlogged", "that give off light", "that have 32x32 textures", "that have 64x64 textures", "that have 8x8 textures", "that have a Roman theme", "that have a Viking theme", "that have a fantasy theme", "that have a futuristic theme", "that have a gothic theme", "that have a medieval theme", "that have a military theme", "that have a mushroom theme", "that have a pirate theme", "that have a prehistoric theme", "that have a space theme", "that have a spooky theme", "that have a steampunk theme", "that have an Egyptian theme", "that have an alien theme", "that have an ancient theme", "that have an apocalyptic theme", "that have an industrial theme", "that have epic models", "that have lots of variations", "that have textures that connect", "that look better", "that look cleaner", "that look more realistic", "that work with redstone"],
             ["Apotheosis", "Bibliocraft", "Blockcraftery", "Carpenter's Blocks", "Chisel", "Chisel and Bits", "Flat Colored Blocks", "LatBlocks", "MalisisDoors", "MrCrayfish's Furniture Mod", "Mubble", "OpenBlocks", "Reliquia", "Rustic", "WorldEdit"]
@@ -347,6 +347,9 @@
             }
             while (str.includes('%thing')) {
                 str = str.replace('%thing', C(things));
+            }
+            while (str.includes('%author')) {
+                str = str.replace('%author', C(authors));
             }
             while (str.includes(" .")) {
                 str = str.replace(' .', ".");
