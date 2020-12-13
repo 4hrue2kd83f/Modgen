@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta property="og:title" content="Minecraft Mod Generator">
+    <meta property="og:type" content="Generate random mod ideas">
+
+    <title>Mod generator</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Georgia, serif;
+            height: 100%;
+            margin: 0px;
+        }
+
+        a {
+            color: #ddd;
+            text-decoration: none;
+            outline: none;
+            transition: text-shadow 0.5s;
+            -moz-transition: text-shadow 0.5s;
+            /* Firefox 4 */
+            -webkit-transition: text-shadow 0.5s;
+            /* Safari and Chrome */
+            -o-transition: text-shadow 0.5s;
+            /* Opera */
+        }
+
+        a:hover {
+            color: #fff;
+            text-shadow: 0px 0px 4px #999;
+        }
+
+        a.insane:hover {
+            color: #fff;
+            text-shadow: 0px 0px 4px #fff, 2px -2px 2px #600, -2px 2px 2px #006;
+        }
+
+
+        #wrap {
+            display: table;
+            width: 100%;
+            height: 100%;
+            margin-bottom: -96px;
+            min-height: 96px;
+        }
+
+        #text {
+            font-size: 24pt;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #credit {
+            width: 100%;
+            text-align: center;
+            color: #333;
+            font-size: 8pt;
+        }
+
+        #ad {
+            width: 100%;
+            text-align: center;
+            margin: 8px 0px;
+            display: none;
+        }
+
+        #tools {
+            font-size: 10pt;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            display: none;
+        }
+
+        #sanity {
+            cursor: pointer;
+            opacity: 0.5;
+            position: relative;
+            top: 8px;
+            left: 10px;
+            padding: 0px;
+            float: left;
+        }
+
+        #sanity * {
+            cursor: pointer;
+            margin: 0px;
+        }
+
+        #sanity:hover {
+            opacity: 1;
+        }
+
+        #sanity label {
+            position: relative;
+            top: -2px;
+        }
+
+        #seed {
+            float: left;
+            position: relative;
+            top: 2px;
+            left: 4px;
+            opacity: 0.5;
+        }
+
+        #seed:hover {
+            opacity: 1;
+        }
+
+        #log {
+            float: left;
+            display: inline-block;
+            overflow: hidden;
+            width: 240px;
+            height: 24px;
+            background: #333;
+            border: 1px solid #666;
+            color: transparent;
+            font-family: Tahoma, sans-serif;
+            padding: 0px;
+            font-size: 10px;
+            transition: width 0.5s, height 0.5s, color 0.5s;
+            -moz-transition: width 0.5s, height 0.5s, color 0.5s;
+            /* Firefox 4 */
+            -webkit-transition: width 0.5s, height 0.5s, color 0.5s;
+            /* Safari and Chrome */
+            -o-transition: width 0.5s, height 0.5s, color 0.5s;
+            /* Opera */
+        }
+
+        #log:hover {
+            width: 240px;
+            height: 240px;
+            overflow-y: scroll;
+            color: #fff;
+        }
+
+        #log:before {
+            display: block;
+            content: 'Log';
+            color: #fff;
+            padding: 4px 4px 6px 4px;
+            width: 32px;
+            text-align: center;
+        }
+
+        #log div {
+            margin: 0px;
+            padding: 2px 6px;
+        }
+
+        #log div:nth-child(odd) {
+            background: #222;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="wrap">
+        <div id="text"><a href="javascript:Generate();" class="sane">A magic mod by Vazkii where you generate mana using
+                flowers.</a></div>
+        <div id="tools">
+            <div id="log">
+                <div>• A magic mod by Vazkii where you generate mana using flowers.</div>
+            </div>
+            <div id="seed"><label for="seedinput">Seed : </label><input id="seedinput" onkeyup="SetSeed();" type="text">
+            </div>
+            <div id="sanity" style="color: rgb(255, 255, 255);"><label for="toggle">Sanity : </label><input id="toggle"
+                    type="checkbox" checked="" onchange="ToggleSanity();"></div>
+        </div>
+    </div>
+    <div id="credit">by 4hrue</div>
+    <div id="ad">
+    </div>
+
+
+    <script>
+
+        function l(what) { return document.getElementById(what); }
+
+        //Orteil's tasty Choose function
+        function C(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        Seed = '.';
+        for (var i = 0; i < 10; i++) { Seed += C(chars); }
+
+        if (l('seedinput').value && l('seedinput').value.charAt(0) != '.') Seed = l('seedinput').value; else l('seedinput').value = Seed;
+
+        //seeded random number courtesy of http://davidbau.com/archives/2010/01/30/random_seeds_coded_hints_and_quintillions.html
+        (function (j, i, g, m, k, n, o) { function q(b) { var e, f, a = this, c = b.length, d = 0, h = a.i = a.j = a.m = 0; a.S = []; a.c = []; for (c || (b = [c++]); d < g;)a.S[d] = d++; for (d = 0; d < g; d++)e = a.S[d], h = h + e + b[d % c] & g - 1, f = a.S[h], a.S[d] = f, a.S[h] = e; a.g = function (b) { var c = a.S, d = a.i + 1 & g - 1, e = c[d], f = a.j + e & g - 1, h = c[f]; c[d] = h; c[f] = e; for (var i = c[e + h & g - 1]; --b;)d = d + 1 & g - 1, e = c[d], f = f + e & g - 1, h = c[f], c[d] = h, c[f] = e, i = i * g + c[e + h & g - 1]; a.i = d; a.j = f; return i }; a.g(g) } function p(b, e, f, a, c) { f = []; c = typeof b; if (e && c == "object") for (a in b) if (a.indexOf("S") < 5) try { f.push(p(b[a], e - 1)) } catch (d) { } return f.length ? f : b + (c != "string" ? "\0" : "") } function l(b, e, f, a) { b += ""; for (a = f = 0; a < b.length; a++) { var c = e, d = a & g - 1, h = (f ^= e[a & g - 1] * 19) + b.charCodeAt(a); c[d] = h & g - 1 } b = ""; for (a in e) b += String.fromCharCode(e[a]); return b } i.seedrandom = function (b, e) { var f = [], a; b = l(p(e ? [b, j] : arguments.length ? b : [(new Date).getTime(), j, window], 3), f); a = new q(f); l(a.S, j); i.random = function () { for (var c = a.g(m), d = o, b = 0; c < k;)c = (c + b) * g, d *= g, b = a.g(1); for (; c >= n;)c /= 2, d /= 2, b >>>= 1; return (c + b) / d }; return b }; o = i.pow(g, m); k = i.pow(2, k); n = k * 2; l(i.random(), j) })([], Math, 256, 6, 52);
+
+        Math.seedrandom(Seed);
+
+        function SetSeed() { Seed = l('seedinput').value; Math.seedrandom(Seed); Generate(); }
+        String.prototype.Cap = function () { return this.charAt(0).toUpperCase() + this.slice(1); }//just put the first letter in uppercase yo
+
+        //okay so this whole thing is pretty straightforward and not as fancy and complex as it could have been
+        Genres = [];
+        function Genre(name, connect, actions, things, goals, mods) {
+            this.name = name;
+            this.connect = connect;
+            this.actions = actions;
+            this.things = things;
+            this.goals = goals;
+            this.mods = mods;
+            Genres.push(this);
+        }
+
+        //yo no looky-loos
+
+        new Genre(
+            ['A tech mod'],
+            ['where you'],
+            ["build", "craft", "customize", "design", "experiment with", "fix", "invent", "make", "manage", "organize", "piece together"],
+            ["appliances", "backpacks", "blocks", "chests", "cobblestone generators", "computers", "crafting tables", "drills", "energy", "energy cells", "engines", "factories", "farms", "fluid pumps", "force fields", "furniture", "gadgets", "gears", "generators", "guns", "hammers", "ingots", "lasers", "machines", "mob farms", "money", "nuclear reactors", "ores", "pipes", "quarries", "rails", "rats", "robots", "rockets", "sentries", "smelteries", "solar panels", "terminals", "tools", "vehicles", "windmills", "wrenches"],
+            ["(it's compatible with %mod)", "and it requires an understanding of quantum mechanics", "and you have to find out why", "because aliens", "because communism", "because why the hell not", "but everything eventually explodes", "but it isn't compatible with %mod", "during a creeper attack", "during a zombie apocalypse", "in space", "in the End", "in the Nether", "in the Twilight Forest", "in the desert", "in the future", "in the ocean", "in the year 3000", "on mars", "that will crash your game if you insult the textures of the mod", "that will crash your game if you use Tfarecnim's mods", "to automate your daily tasks", "to build a farm", "to craft a cake", "to defeat bosses", "to defend your base from anime girls", "to defend your base from villagers", "to destroy the ender dragon", "to duplicate ores", "to explore the world", "to fight creepers", "to fight terrorists", "to fight zombies", "to make money", "to mine ores", "to score points", "to stop a meteorite from crashing into the Overworld", "to stop an alien invasion", "to stop the world from burning", "to store items", "to unlock achievements", "to win the game", "underground", "until you die", "until you get bored", "until you get bored and start playing Overwatch instead", "using RF", "using coal", "using cobblestone", "using copper", "using diamonds", "using dirt", "using ender pearls", "using iron", "using nukes", "using obsidian", "using potatoes", "using redstone", "using science", "using sugarcane", "using tin", "while stranded on an island", "with a pickaxe", "with a shovel", "with a tech tree", "with an axe", "with computers", "with huge multiblock structures", "with lots of ores", "with machines", "with steam", "with three different types of copper", "with your friends"],
+            ['Advanced Rocketry', 'AE2', 'Applied Logistics', 'Botania', 'Buildcraft', 'Charset', 'ComputerCraft', 'Create', 'Deep Resonance', 'Ender IO', 'Ender Storage', 'Exchangers', 'Extra Utilities', 'ExtraRails', 'Fluxed Redstone', 'Forestry', 'Galacticraft', 'Gendustry', 'Harvestcraft', 'Immersive Engineering', 'Industrial Foregoing', 'Integrated Dynamics', 'Literal Ascension', 'MatterOverdrive', 'Mekanism', 'Mekfarm', 'MFR', 'Natural Pledge', 'NuclearCraft', 'OpenComputers', 'Project Red', 'Project Red Extended', 'ProjectX', 'PyroTech', 'Railcraft', 'Refined Storage', 'Refraction', 'RFTools', 'Rotarycraft', 'Silicio', 'Storage Drawers', 'TechReborn', 'TerraFirmaCraft', 'Tesla Coils', 'Tetra', 'TheCakeMod', 'Thermal Expansion', 'Tinkers Construct', 'Translocators', 'Wireless Crafting Terminal', 'Wireless Redstone CBE', 'XNet', 'XPTeleporters']
+        );
+
+        new Genre(
+            ['A magic mod'],
+            ['where you'],
+            ["cast", "conjure", "craft", "design", "generate", "incant", "invoke", "make", "possess", "research"],
+            ["altars", "amulets", "baubles", "cauldrons", "charms", "concoctions", "crystals", "curses", "enchantments", "flowers", "incantations", "magic dust", "magic tricks", "monsters", "plants", "portals", "potions", "rats", "shrines", "souls", "spells", "spirits", "staffs", "stars", "tombstones", "tomes", "totems", "wands", "waystones"],
+            ["(it gets weirder)", "(it's compatible with %mod)", "- legally", "TO THE MAX", "and you have to find out why", "because magic", "but bats are trying to stop you", "but bees are trying to stop you", "but not everything is rainbows and unicorns", "in Alfheim", "in another dimension", "in space", "in the Betweenlands", "in the End", "in the Nether", "in the Twilight Forest", "to become king", "to defeat bosses", "to defeat the Ender Dragon", "to defend your base from Stormtroopers", "to defend your base from Vazkii", "to defend your base from extradimesional invaders", "to defend your base from monsters", "to defend your base from zombies", "to forge the sacred sword", "to investigate a conspiracy", "to save a princess", "to save the world", "to score points", "to unlock achievements", "using anime girls", "using druidry", "using magic", "using mana", "using math", "using necromancy", "using religion", "using science", "using thaumaturgy", "using the dark arts", "using the four elements", "using witchcraft", "using wizardry", "using your imagination", "with aliens", "with ascended beings", "with demi-gods", "with dwarves", "with evil spirits", "with ghosts", "with gnomes", "with monkeys", "with monsters", "with mutants", "with ninja", "with samurai", "with unicorns", "with witches", "with wizards", "without using magic"],
+            ["AbyssalCraft", "Astral Sorcery", "Baubles", "Botania", "Blood Magic", "Chromaticraft", "Embers", "EvilCraft", "Mystical Agriculture", "ProjectE", "Psi", "Psionic Addons", "Reliquary", "Roots", "Thaumcraft", "Vampirism", "Vitality", "Witchery"]
+        )
+
+        new Genre(
+            ["A magitech mod"],
+            ["where you"],
+            Genres[0].actions.concat(Genres[1].actions),
+            Genres[0].things.concat(Genres[1].things),
+            Genres[0].goals.concat(Genres[1].goals),
+            Genres[0].mods.concat(Genres[1].mods),
+        )
+
+        new Genre(
+            ["A combat mod"],
+            ["where you"],
+            ['slay', 'battle', 'vanquish', 'challenge', 'defeat', 'save the world with', 'banish', 'enslave', 'free', 'resurrect', 'meet', 'annoy', 'run away from', 'hide from', 'chase', 'encounter', 'must find', 'save the world from', 'must obtain collectible', 'go to war with', 'retrieve holy artifacts with', 'hang out with', 'learn from', 'explore dungeons with', 'explore dungeons full of'],
+            ["angels", "barbarians", "bards", "bats", "bees", "bunnies", "creatures", "creepers", "cyclops", "dark wizards", "demons", "dinosaurs", "dragons", "dwarves", "eldritch monstrosities", "elementals", "elves", "enchanted furniture", "ents", "evil wizards", "forest spirits", "ghosts", "ghouls", "giant monsters", "giants", "gnomes", "goblins", "golems", "halflings", "hellhounds", "hellrats", "heroes", "kings", "kings and queens", "knights", "legendary warriors", "mages", "manbeasts", "monsters", "mushrooms", "necromancers", "ninja", "ocean spirits", "oozes", "orcs", "paladins", "pigs", "pixies", "priests", "princes", "princes and princesses", "princesses", "queens", "rangers", "rats", "reptilians", "samurai", "shape-shifters", "sheep", "sky whales", "sky worms", "slimes", "spider people", "spiders", "spirits", "spirits of nature", "town guards", "trolls", "turtles", "unicorns", "vampires", "werefoxes", "werepigs", "werewolves", "witches", "wizard kings", "world-spanning abominations", "wyverns", "zombies"],
+            ["and collect loot", "and collect treasure", "and explore the world", "and fulfill prophecies", "and it's very grindy", "and loot sweet gear", "and you start out on a skyblock", "as the legends foretold", "because thou must", "in Alfheim", "in a fantasy world", "in gigantic strongholds", "in space", "in the Betweenlands", "in the End", "in the Nether", "in the Twilight Forest", "in the desert", "in the hunting dimension", "in the mining dimension", "in the ocean", "inspired by %mod", "inspired by Fortnite", "inspired by League of Legends", "inspired by Overwatch", "inspired by Skyrim", "inspired by Terraria", "inspired by Vazkii", "inspired by anime girls", "inspired by hentai", "inspired by naruto", "that attack anything and everything", "that blow up", "that can destroy your house", "that can mine ores", "that will destroy your world if you're not careful", "to earn money", "to gain levels", "to prevent the fabric of reality from unravelling", "to save the princess", "to score points", "to unlock achievements", "to unravel the fabric of reality", "to warp spacetime", "until the level cap", "while balancing your karma", "while bards write songs about you", "while being torn between the forces of good and evil", "while upgrading your gear", "with alchemy", "with magic"],
+            ["AbyssalCraft", "Beesourceful", "Draconic Evolution", "Ender Zoo", "Familiar Fauna", "Ice and Fire", "Lycanite's Mobs", "Mowzie's Mobs", "Primitive Mobs", "Rats", "Special Mobs", "Twilight Forest"]
+        )
+
+        new Genre(
+            ["A building mod"],
+            ["that adds"],
+            ["lots of", "more types of", "more variety to"],
+            ["blocks", "doors", "fences", "furniture", "glass", "ladders", "paintings", "pressure plates", "sand", "slabs", "slopes", "stairs", "stone", "torches", "trapdoors", "trees", "vertical slabs", "walls", "wood", "wool colors"],
+            ["(it's compatible with %mod)", "that %author probably won't like", "that are black", "that are blue", "that are circular", "that are customizable", "that are functional", "that are green", "that are inspired by %modingenre", "that are inspired by Japanese architecture", "that are inspired by vanilla", "that are inspried by %mod", "that are red", "that are smaller than a block", "that are vanilla+", "that are white", "that are yellow", "that can be chiseled into many different forms", "that can be waterlogged", "that give off light", "that have 32x32 textures", "that have 64x64 textures", "that have 8x8 textures", "that have a Roman theme", "that have a Viking theme", "that have a fantasy theme", "that have a futuristic theme", "that have a gothic theme", "that have a medieval theme", "that have a military theme", "that have a mushroom theme", "that have a pirate theme", "that have a prehistoric theme", "that have a space theme", "that have a spooky theme", "that have a steampunk theme", "that have an Egyptian theme", "that have an alien theme", "that have an ancient theme", "that have an apocalyptic theme", "that have an industrial theme", "that have epic models", "that have lots of variations", "that have textures that connect", "that look better", "that look cleaner", "that look more realistic", "that work with redstone"],
+            ["Apotheosis", "Bibliocraft", "Blockcraftery", "Carpenter's Blocks", "Chisel", "Chisel and Bits", "Flat Colored Blocks", "LatBlocks", "MalisisDoors", "MrCrayfish's Furniture Mod", "Mubble", "OpenBlocks", "Reliquia", "Rustic", "WorldEdit"]
+        )
+
+        new Genre(
+            ["An exploration mod", "A world gen mod"],
+            ["that adds"],
+            ["lots of", "more types of", "more variety in"],
+            ["biomes", "blocks", "caves", "dungeons", "flowers", "mobs", "mountains", "plants", "stone", "structures", "terrain", "trees"],
+            ["to the Nether", "to the End", "to Alfheim", "to the Twilight Forest", "to the Betweenlands", "to the Overworld", "to oceans", "to deserts", "to taigas", "to mesas", "to extreme hills", "to plains", "to savannas", "to forests", "to swamps", "to jungles", "to ice plains", "to caves", "to the underground", "to the void", "to villages", "to mineshafts", "to nether fortresses", "to end cities", "that are inspired by Japanese architecture", "that are inspired by vanilla", "that are inspried by %mod", "that are functional", "that %author probably won't like"],
+            ["Aether", "Biomes Bundle", "Biomes o' Plenty", "Conquest Reforged", "Divine RPG", "Doomlike Dungeons", "Dynamic Trees", "Endergetic Expansion", "Hardcore Ender Expansion", "Just Enough Dimensions", "Natura", "Nether EX", "Oh The Biomes You'll Go", "Serene Seasons", "Stygian End", "TerraForged", "Traverse", "Twilight Forest", "Underground Biomes", "Worley's Caves", "Yung's Better Mineshafts"]
+        )
+
+        new Genre(
+            ["A utility mod"],
+            ["that"],
+            ["adds CraftTweaker support to %mod", "adds JustEnoughItems support to %mod", "allows %thing to be customized", "enhances %thing", "fixes a bug caused by an interaction between %mod and %mod", "fixes bugs related to %thing", "improves the performance of %thing", "patches an exploit caused by %thing", "provides compatibility between %mod and %mod", "reduces lag caused by %thing"],
+            [""],
+            [""],
+            []
+        )
+
+        authors = ["aidancbrady", "AlgorithmX2", "amadornes", "Amazig Jj", "Aroma1997", "asie", "Azanor", "BeastLe9enD", "Benimatic", "Blusunrize", "boni", "brandon3055", "Buuz135", "chicken_bones", "CoFH", "Corosus", "CovertJaguar", "cpw", "CrazyPants", "CreativeRealms", "dan200", "Darkhax", "DeflatedPickle", "Dinnerbone", "Direwolf20", "Dockter", "Drullkus", "Eladkay", "Eloraam", "Elucent", "Emoniph", "Etho", "EmosewaGamer", "FireBall1725", "Forecaster", "gabizou", "Glasspelican", "Glitchfiend", "Greenphelm", "GWSheridan", "HellFirePVP", "HyperionNexus", "iChun", "InsomniaKitten", "JamiesWhiteShirt", "jaquadro", "Jaredlll08", "Jeb", "kashike", "KingLemming", "KitsuneAlex", "LatvianModder", "LexManos", "LordSaad", "McJty", "mDiyo", "mezz", "modmuss50", "MrTJP", "NillerUdenDild", "Pam", "Poke", "Prospector", "ProfMobius", "raphy", "Reika", "rubensworks", "RWTema", "Sangar", "Shadowfacts", "Shadows_of_Fire", "SimeonRadivoev", "slowpoke", "sokratis12GR", "some guy on Reddit", "SpitefulFox", "srs_bsns", "Tamaized", "techbrew", "TehNut", "TheCodedOne", "TheRealp455w0rd", "tterrag", "Vazkii", "WayofTime", "wiiv", "Wire Segal", "Xisuma", "Zidane"];
+
+        versions = ["Minecraft 1.10.2", "Minecraft 1.11", "Minecraft 1.12.2", "Minecraft 1.13", "Minecraft 1.14.4", "Minecraft 1.15.1", "Minecraft 1.2.5", "Minecraft 1.4.7", "Minecraft 1.6.4", "Minecraft 1.7.10", "Minecraft 1.7.2", "Minecraft 1.8.9", "Minecraft 1.9.4", "Minecraft Beta 1.7.3", "Minecraft Beta 1.8", "Bedrock Edition", "Bukkit", "Canary", "Cauldron", "Fabric", "Forge", "Java Minecraft", "Liteloader", "MCPE", "Minecraft 2.0", "Minecraft Windows 10 Edition", "ModLoader", "OpenModLoader", "Paper", "PaperModLoader", "Rift", "Spigot", "Sponge", "XLoader"];
+
+        things = ["Creative mode", "GUIs", "Hardcore mode", "Hypixel BedWars", "Minecraft Demo Mode", "Minecraft Realms", "Piglin bartering", "PvP", "Survival mode", "TNT", "XP farms", "advancements", "amethyst crystals", "beacons", "bows", "breeding", "brewing stands", "buckets", "building", "campfires", "cartography tables", "chests", "chickens", "command blocks", "commands", "crafting tables", "crawling", "creepers", "dirt", "double chests", "eating", "eggs", "elytra", "enderman teleportation", "endermen", "experience farms", "explosions", "falling blocks", "fancy graphics", "farming", "flint and steel", "furnaces", "game rules", "ghasts", "glass panes", "golden apples", "guardians", "hoes", "husks", "illagers", "iron golems", "item durability", "jumping", "lava", "leaves", "light sources", "lightning", "minecarts", "mining", "mob AI", "mob drops", "mob farms", "monster infighting", "mules", "multiplayer", "note blocks", "ore generation", "pigs", "pillager raids", "redstone circuitry", "redstone repeaters", "resource packs", "shaped crafting", "shapeless crafting", "shears", "sheep", "shields", "singleplayer", "skeletons", "slimes", "smelting ore", "smithing tables", "sneaking", "snowballs", "spiders", "sprinting", "stalactites", "status effects", "swimming", "switching languages", "swords", "target blocks", "the Creative Inventory", "the End", "the Forge in-game config menu", "the HUD", "the Nether", "the Overworld", "the controls", "the death menu", "the inventory screen", "the menu screen", "the options menu", "the recipe book", "torches", "transparent textures", "trees", "villager AI", "villager trading", "villagers", "water", "waterlogging", "weather", "witches", "world generation", "zombies"];
+
+        additionalMods = ["ArmorPlus", "Crystal Mod", "Just Daggers", "Spartan Weaponry", "Brandon's Core", "ChickenASM", "CodeChickenCore", "CodeChickenLib", "FTBLib", "MrTJPCore", "RebornCore", "Shadowfacts' Forgelin", "ShadowMC", "Fabric", "Fabric API", "FML", "Forge", "Sponge", "AppleSkin", "BeeBetterAtBees", "Chicken Chunks", "Clipboard", "CraftTweaker", "FMP", "FoamFix", "FTBUtilities", "Hard Core Map Reset", "HWYLA", "Inventory Tweaks", "Iron Apples", "Iron Chests", "JABBA", "JustEnoughItems", "JourneyMap", "Just Dust", "Just Nuggets", "Mob Settings", "mxTune", "NEI", "Optifine", "p455w0rds Things", "Quark", "REI", "Silimatics", "Texture Fix", "The One Probe", "TMI", "VoxelMap", "WAILA"];
+
+        //everything
+        allNames = [];
+        allActions = [];
+        allThings = [];
+        allGoals = [];
+        allMods = [];
+        for (var i in Genres) {
+            allNames = allNames.concat(Genres[i].name);
+            allActions = allActions.concat(Genres[i].actions);
+            allThings = allThings.concat(Genres[i].things);
+            allGoals = allGoals.concat(Genres[i].goals);
+            allMods = allMods.concat(Genres[i].mods);
+        }
+
+        allMods.concat(additionalMods);
+
+        Sanity = 1;
+
+        function ToggleSanity() {
+            if (!l('toggle').checked) { Sanity = 0; l('sanity').style.color = '#f00'; }
+            else { Sanity = 1; l('sanity').style.color = '#fff'; }
+        }
+
+        function Generate() {
+            var genre = C(Genres);
+            var str = '';
+            if (Sanity) {
+                if (Math.random() < 0.08 && (genre.mods.length > 0)) {
+                    str += "An addon for %modingenre"
+                } else {
+                    str += C(genre.name);
+                }
+                if (Math.random() < 0.5) {
+                    str += " for " + C(versions);
+                }
+                if (Math.random() < 0.2) {
+                    str += " by " + C(authors);
+                }
+                str += ' ' + C(genre.connect) + ' ' + C(genre.actions) + ' ' + C(genre.things) + ' ' + C(genre.goals) + '.';
+            }
+
+            while (str.includes('%modingenre')) {
+                if (Sanity) {
+                    str = str.replace('%modingenre', C(genre.mods));
+                } else {
+                    str = str.replace('%modingenre', C(allMods));
+                }
+            }
+            while (str.includes('%mod')) {
+                str = str.replace('%mod', C(allMods));
+            }
+            while (str.includes('%thing')) {
+                str = str.replace('%thing', C(things));
+            }
+            while (str.includes(" .")) {
+                str = str.replace(' .', ".");
+            }
+
+            //else str=C(C(Genres).name)+' where you '+C(C(Genres).actions)+' '+C(C(Genres).things)+' '+C(C(Genres).goals)+'.';
+            str = str.Cap()
+            l('text').innerHTML = ('<a href="javascript:Generate();" class="' + (Sanity ? 'sane' : 'insane') + '">' + str + '</a>');
+            l('log').innerHTML = '<div>&bull; ' + str + '</div>' + l('log').innerHTML;
+        }
+
+        ToggleSanity();
+
+        var isIE = /*@cc_on!@*/false || !!document.documentMode;
+        if (isIE) {
+            text.innerHTML = '<a class="insane">This website does not support Internet Explorer.</a>' // String.includes ain't available on IE
+        } else {
+            Generate();
+        }
+
+    </script>
+
+
+</body>
+
+</html>
