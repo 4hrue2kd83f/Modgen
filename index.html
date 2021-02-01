@@ -74,7 +74,7 @@
         }
 
         #tools {
-            font-size: 10pt;
+            font-size: 20pt;
             position: absolute;
             left: 0px;
             top: 0px;
@@ -82,30 +82,28 @@
 
         #sanity {
             cursor: pointer;
-            opacity: 0.5;
-            position: relative;
+            opacity: 1;
+            position: absolute;
             top: 8px;
-            left: 10px;
+            right: 10px;
             padding: 0px;
             float: left;
-            display: none;
+            font-size: 40px;
         }
 
         #sanity * {
             cursor: pointer;
             margin: 0px;
-            display: none;
+            opacity: 1;
         }
 
         #sanity:hover {
             opacity: 1;
-            display: none;
         }
 
         #sanity label {
             position: relative;
             top: -2px;
-            display: none;
         }
 
         #seed {
@@ -125,13 +123,13 @@
             display: inline-block;
             overflow: hidden;
             width: 240px;
-            height: 24px;
+            height: 36px;
             background: #333;
             border: 1px solid #666;
             color: transparent;
             font-family: Tahoma, sans-serif;
             padding: 0px;
-            font-size: 10px;
+            font-size: 20px;
             transition: width 0.5s, height 0.5s, color 0.5s;
             -moz-transition: width 0.5s, height 0.5s, color 0.5s;
             /* Firefox 4 */
@@ -150,7 +148,7 @@
 
         #log:before {
             display: block;
-            content: 'Log';
+            content: 'Combinations';
             color: #fff;
             padding: 4px 4px 6px 4px;
             width: 32px;
@@ -171,17 +169,90 @@
 <body>
 
     <div id="wrap">
-        <div id="text"><a href="javascript:Generate();" class="sane">A magic mod by Vazkii where you generate mana using
-                flowers.</a></div>
+        <div id="text">
+            <a href="javascript:Generate();" class="sane">
+                <img src="sealsi.png" alt="" id="image1">
+                <img src="sealsi.png" alt="" id="image2">
+                <img src="sealsi.png" alt="" id="image3">
+            </a>
+        </div>
         <div id="tools">
             <div id="log">
-                <div></div>
+                <img src="coolcry.png" width="32" height="32" alt="">
+                x2
+                <br>
+
+                <img src="coolcry.png" width="32" height="32" alt="">
+                <img src="coolcry.png" width="32" height="32" alt="">
+                x3
+                <br>
+
+                <img src="red.png" width="32" height="32" alt="">
+                <img src="red.png" width="32" height="32" alt="">
+                <img src="red.png" width="32" height="32" alt="">
+                x5
+                <br>
+
+                <img src="bread.png" width="32" height="32" alt="">
+                <img src="bread.png" width="32" height="32" alt="">
+                <img src="bread.png" width="32" height="32" alt="">
+                x30
+                <br>
+
+                <img src="cowboy.png" width="32" height="32" alt="">
+                <img src="cowboy.png" width="32" height="32" alt="">
+                <img src="cowboy.png" width="32" height="32" alt="">
+                x50
+                <br>
+
+                <img src="monkey.png" width="32" height="32" alt="">
+                <img src="monkey.png" width="32" height="32" alt="">
+                <img src="monkey.png" width="32" height="32" alt="">
+                x80
+                <br>
+
+                <img src="hiding.png" width="32" height="32" alt="">
+                <img src="hiding.png" width="32" height="32" alt="">
+                <img src="hiding.png" width="32" height="32" alt="">
+                x120
+                <br>
+
+                <img src="abby2.png" width="32" height="32" alt="">
+                <img src="abby2.png" width="32" height="32" alt="">
+                <img src="abby2.png" width="32" height="32" alt="">
+                x200
+                <br>
+
+                <img src="saturn.png" width="32" height="32" alt="">
+                <img src="saturn.png" width="32" height="32" alt="">
+                <img src="saturn.png" width="32" height="32" alt="">
+                x500
+                <br>
+
+                <img src="coolcry.png" width="32" height="32" alt="">
+                <img src="coolcry.png" width="32" height="32" alt="">
+                <img src="coolcry.png" width="32" height="32" alt="">
+                x1000
+                <br>
+
+                <img src="abigail.png" width="32" height="32" alt="">
+                <img src="abigail.png" width="32" height="32" alt="">
+                <img src="abigail.png" width="32" height="32" alt="">
+                x2500
+                <br>
+
+                <img src="sealsi.png" width="32" height="32" alt="">
+                <img src="sealsi.png" width="32" height="32" alt="">
+                <img src="sealsi.png" width="32" height="32" alt="">
+                x5000
+                <br>
+
             </div>
-            <div id="seed"><label for="seedinput">Seed : </label><input id="seedinput" onkeyup="SetSeed();" type="text">
-            </div>
-            <div id="sanity" style="color: rgb(255, 255, 255);"><label for="toggle">Sanity : </label><input id="toggle"
-                    type="checkbox" checked="" onchange="ToggleSanity();"></div>
         </div>
+        <div id="sanity">
+            Money: <div id="money">100</div>
+        </div>
+    </div>
     </div>
     <div id="credit">by 4hrue</div>
     <div id="ad">
@@ -189,6 +260,7 @@
 
 
     <script>
+        var pMoney = 100;
 
         function l(what) { return document.getElementById(what); }
 
@@ -318,58 +390,88 @@
         }
 
         function Generate() {
-            var genre = C(Genres);
             var str = '';
-            if (Sanity) {
-                if (Math.random() < 0.08 && (genre.mods.length > 0)) {
-                    str += "An addon for %modingenre"
+
+            var sd = Math.random() * 3;
+
+            images = ["abby2.png", "abigail.png", "bread.png", "cowboy.png", "disagree.png", "hiding.png", "monkey.png", "red.png", "saturn.png", "sealsi.png"]
+
+            var roll = [];
+            var mult = 0;
+
+            if (true) {
+                if (sd < 1 / 2560) {
+                    roll = ["sealsi.png", "sealsi.png", "sealsi.png"];
+                    mult = 5000;
+                } else if (sd < 1 / 1280) {
+                    roll = ["abigail.png", "abigail.png", "abigail.png"];
+                    mult = 2500;
+                } else if (sd < 1 / 640) {
+                    roll = ["coolcry.png", "coolcry.png", "coolcry.png"];
+                    mult = 1000;
+                } else if (sd < 1 / 320) {
+                    roll = ["saturn.png", "saturn.png", "saturn.png"];
+                    mult = 500;
+                } else if (sd < 1 / 160) {
+                    roll = ["abby2.png", "abby2.png", "abby2.png"];
+                    mult = 200;
+                } else if (sd < 1 / 80) {
+                    roll = ["hiding.png", "hiding.png", "hiding.png"];
+                    mult = 120;
+                } else if (sd < 1 / 40) {
+                    roll = ["monkey.png", "monkey.png", "monkey.png"];
+                    mult = 80;
+                } else if (sd < 1 / 20) {
+                    roll = ["cowboy.png", "cowboy.png", "cowboy.png"];
+                    mult = 50;
+                } else if (sd < 1 / 10) {
+                    roll = ["bread.png", "bread.png", "bread.png"];
+                    mult = 30;
+                } else if (sd < 1 / 5) {
+                    roll = ["red.png", "red.png", "red.png"];
+                    mult = 5;
+                } else if (sd < 1) {
+                    var r2 = Math.random();
+                    if (r2 < 1 / 3) {
+                        roll = [C(images), "coolcry.png", "coolcry.png"];
+                    } else if (r2 < 1 / 3) {
+                        roll = ["coolcry.png", C(images), "coolcry.png"];
+                    } else {
+                        roll = ["coolcry.png", "coolcry.png", C(images)];
+                    }
+                    mult = 3;
+                } else if (sd < 1.5 ) {
+                    var r2 = Math.random();
+                    if (r2 < 1 / 3) {
+                        roll = ["coolcry.png", C(images), C(images)];
+                    } else if (r2 < 1 / 3) {
+                        roll = [C(images), "coolcry.png", C(images)];
+                    } else {
+                        roll = [C(images), C(images), "coolcry.png"];
+                    }
+                    mult = 2;
                 } else {
-                    str += C(genre.name);
+                    roll = [C(images), C(images), C(images)];
+                    mult = 0;
                 }
-                if (Math.random() < 0.5) {
-                    str += " for " + C(versions);
-                }
-                if (Math.random() < 0.2) {
-                    str += " by " + C(authors);
-                }
-                str += ' ' + C(genre.connect) + ' ' + C(genre.actions) + ' ' + C(genre.things) + ' ' + C(genre.goals) + '.';
+
+                pMoney -= 10;
+                pMoney += 10 * mult;
+
+                document.getElementById("image1").src = roll[0];
+                document.getElementById("image2").src = roll[1];
+                document.getElementById("image3").src = roll[2];
+
+                //else str=C(C(Genres).name)+' where you '+C(C(Genres).actions)+' '+C(C(Genres).things)+' '+C(C(Genres).goals)+'.';
             }
 
-            while (str.includes('%modingenre')) {
-                if (Sanity) {
-                    str = str.replace('%modingenre', C(genre.mods));
-                } else {
-                    str = str.replace('%modingenre', C(allMods));
-                }
+            var isIE = /*@cc_on!@*/false || !!document.documentMode;
+            if (isIE) {
+                text.innerHTML = '<a class="insane">This website does not support Internet Explorer.</a>' // String.includes ain't available on IE
+            } else {
+                money.innerHTML = pMoney;
             }
-            while (str.includes('%mod')) {
-                str = str.replace('%mod', C(allMods));
-            }
-            while (str.includes('%thing')) {
-                str = str.replace('%thing', C(things));
-            }
-            while (str.includes('%author')) {
-                str = str.replace('%author', C(authors));
-            }
-            while (str.includes(" .")) {
-                str = str.replace(' .', ".");
-            }
-
-            //else str=C(C(Genres).name)+' where you '+C(C(Genres).actions)+' '+C(C(Genres).things)+' '+C(C(Genres).goals)+'.';
-            str = str.Cap()
-            l('text').innerHTML = ('<a href="javascript:Generate();" class="' + (Sanity ? 'sane' : 'insane') + '">' + str + '</a>');
-            l('log').innerHTML = '<div>&bull; ' + str + '</div>' + l('log').innerHTML;
         }
-
-        ToggleSanity();
-
-        var isIE = /*@cc_on!@*/false || !!document.documentMode;
-        if (isIE) {
-            text.innerHTML = '<a class="insane">This website does not support Internet Explorer.</a>' // String.includes ain't available on IE
-        } else {
-            Generate();
-        }
-
     </script>
 
 
