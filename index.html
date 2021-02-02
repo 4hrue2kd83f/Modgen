@@ -250,7 +250,7 @@
             </div>
         </div>
         <div id="sanity">
-            Money: <div id="money">100</div>
+            SealsiBucks: <div id="money">0.2</div>
         </div>
     </div>
     </div>
@@ -392,7 +392,7 @@
         function Generate() {
             var str = '';
 
-            var sd = Math.random() * 3;
+            var sd = Math.random() * 4;
 
             images = ["abby2.png", "abigail.png", "bread.png", "cowboy.png", "disagree.png", "hiding.png", "monkey.png", "red.png", "saturn.png", "sealsi.png"]
 
@@ -434,17 +434,17 @@
                     var r2 = Math.random();
                     if (r2 < 1 / 3) {
                         roll = [C(images), "coolcry.png", "coolcry.png"];
-                    } else if (r2 < 1 / 3) {
+                    } else if (r2 < 2 / 3) {
                         roll = ["coolcry.png", C(images), "coolcry.png"];
                     } else {
                         roll = ["coolcry.png", "coolcry.png", C(images)];
                     }
                     mult = 3;
-                } else if (sd < 1.5 ) {
+                } else if (sd < 1.5) {
                     var r2 = Math.random();
                     if (r2 < 1 / 3) {
                         roll = ["coolcry.png", C(images), C(images)];
-                    } else if (r2 < 1 / 3) {
+                    } else if (r2 < 2 / 3) {
                         roll = [C(images), "coolcry.png", C(images)];
                     } else {
                         roll = [C(images), C(images), "coolcry.png"];
@@ -453,6 +453,9 @@
                 } else {
                     roll = [C(images), C(images), C(images)];
                     mult = 0;
+                    if ((roll[0] == roll[1]) && (roll[1] == roll[2])) {
+                        roll = [C(images), C(images), C(images)];
+                    }
                 }
 
                 pMoney -= 10;
@@ -469,7 +472,7 @@
             if (isIE) {
                 text.innerHTML = '<a class="insane">This website does not support Internet Explorer.</a>' // String.includes ain't available on IE
             } else {
-                money.innerHTML = pMoney;
+                money.innerHTML = pMoney / 500;
             }
         }
     </script>
